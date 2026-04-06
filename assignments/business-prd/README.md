@@ -1,8 +1,12 @@
 
-Here are the code for ERD, in future I will add more details.
+# Add Image
 
-```
+![ERD](./ERD.png)
 
+
+## Eraser ER Diagram Code
+
+```js
 customers [icon: user, color: red]{
   id serial pk
   full_name string not null
