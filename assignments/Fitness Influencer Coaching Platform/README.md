@@ -1,3 +1,7 @@
+## Diagram
+
+![ERD](./ERD.png)
+
 ## Code
 
 ```js
