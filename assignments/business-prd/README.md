@@ -1,5 +1,5 @@
 
-# Add Image
+# ER Diagram
 
 ![ERD](./ERD.png)
 
