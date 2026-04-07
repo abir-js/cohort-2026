@@ -93,3 +93,113 @@ orders.id < payments.order_id
 orders.id - shipping_details.order_id
  
 ```
+
+
+## Database Tables Overview
+
+### Customers
+
+Stores customer details.
+
+* Unique Instagram handle
+* Optional email
+* Default shipping address
+
+---
+
+### Categories
+
+Defines product categories.
+
+* Example: Shirts, Accessories, Handmade Crafts
+
+---
+
+### Products
+
+Stores all product details.
+
+* Linked to category
+* Supports:
+
+  * `THRIFTED` (single-piece items)
+  * `HANDMADE` (multiple stock items)
+* Includes attributes like size, color, condition
+
+---
+
+### Inventory
+
+Tracks stock availability.
+
+* One-to-one relationship with products
+* Default stock = 1 (ideal for thrifted items)
+
+---
+
+### Orders
+
+Stores customer orders.
+
+* Linked to customers
+* Tracks order status:
+
+  * `PENDING`
+  * `CONFIRMED`
+  * `SHIPPED`
+  * `DELIVERED`
+  * `CANCELLED`
+
+---
+
+### Order Items
+
+Stores products inside each order.
+
+* Supports multiple products per order
+* Stores price at purchase time (important for price changes)
+
+---
+
+### 💳 Payments
+
+Handles payment records.
+
+* Payment methods:
+
+  * UPI
+  * Bank Transfer
+  * Credit Card
+  * COD
+* Tracks status:
+
+  * `PENDING`, `SUCCESS`, `FAILED`, `REFUNDED`
+
+---
+
+### Shipping Details
+
+Tracks delivery information.
+
+* One-to-one with orders
+* Includes tracking number & courier
+* Shipping status:
+
+  * `PREPARING`
+  * `IN_TRANSIT`
+  * `DELIVERED`
+  * `RETURNED`
+
+---
+
+## Relationships
+
+* One customer → many orders
+* One category → many products
+* One product → one inventory
+* One order → many order items
+* One order → one payment
+* One order → one shipping detail
+
+---
+
