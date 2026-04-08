@@ -1,0 +1,120 @@
+title Clinic Appointment and Diaginist Platform
+
+doctor [icon: user, color: blue] {
+  id int pk
+  name string
+  speciality enum("General Surgeon", "General Medicine", "Pediatrician" "Others..")
+  qualification string
+  registration_no string unique not null
+  phone_no string not null
+  email string not null
+  address string
+
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+patient [icon: user, color: blue] {
+  id string pk
+  name string not null
+  age int
+  address string
+  sex enum("male", "female", "others")
+  phone_no string
+  medical_history string
+
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+department [icon: home, color: orange] {
+  id int pk 
+  name string not null
+  doctor_id int fk not null
+
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+
+appointments [icon: document, color: pink] {
+  id string
+  status enum("Reserved", "Checked-In", "In-Consultation", "Completed")
+  date timestamp
+  time timestamp
+  patient_id int fk not null
+  doctor_id int fk not null
+  has_appointed_consultation boolean
+  fees double not null
+
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+
+consultation [icon: document, color: yellow] {
+  id string
+  type string
+  appointment_id int fk not null
+  is_diagonist_test_prescribed boolean
+
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+diagonist_test [icon: test-tube, color: green] {
+  id int pk
+  test_name string not null
+  description string not null
+  remarks string not null
+  consultation_id int fk not null
+
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+
+
+reports [icon: document, color: purple] {
+  id int pk
+  report_name string not null
+  description string
+  remarks string
+  diagonist_test_id int fk not null
+  patient_id string fk not null
+
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+payment [icon: rupee, color: green] {
+  payment_id int pk
+  type enum("cash", "card", "UPI", "NET_BANKING")
+  status enum ("COMPLETED", "PENDING", "ROLLBACK", "REMAINING")
+  price double fk not null
+  appointment_id int fk not null
+
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+// One patient can hava many appointments
+patient.id < appointments.patient_id
+// One department can have many doctors
+department.doctor_id  < doctor.id
+// One doctor can visit many patient
+appointments.doctor_id < appointments.patient_id
+// Each appointment is assigned with one or multiple doctors 
+appointments.doctor_id < department.doctor_id
+
+// If one patient has multiple disease, then he would have multiple appointments
+appointments.id < consultation.appointment_id
+// One consultation can lead to multiple tests
+consultation.id < diagonist_test.consultation_id
+//One test has only one report
+diagonist_test.id - reports.diagonist_test_id
+reports.patient_id - patient.id
+
+// Each appointmets has its own payment
+appointments.id - patient.id
+payment.price - appointments.fees
