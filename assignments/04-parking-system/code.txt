@@ -1,0 +1,67 @@
+## Code 
+
+```js
+vehicles [icon: truck, color: blue] {
+  vehicle_id string pk
+  number_plate string
+  vehicle_category_id string
+}
+
+vehicle_categories [icon: tag, color: purple] {
+  category_id string pk
+  name string
+}
+
+parking_zones [icon: map, color: orange] {
+  zone_id string pk
+  name string
+  level number
+}
+
+spot_categories [icon: star, color: yellow] {
+  category_id string pk
+  name string
+}
+
+parking_spots [icon: square, color: green] {
+  spot_id string pk
+  zone_id string
+  spot_category_id string
+  is_available boolean
+}
+
+parking_sessions [icon: clock, color: red] {
+  session_id string pk
+  vehicle_id string
+  spot_id string
+  entry_time timestamp
+  exit_time timestamp
+  status string
+}
+
+parking_tickets [icon: ticket, color: blue] {
+  ticket_id string pk
+  session_id string
+  issue_time timestamp
+}
+
+payments [icon: credit-card, color: green] {
+  payment_id string pk
+  session_id string
+  amount number
+  payment_status string
+  payment_time timestamp
+}
+
+vehicles.vehicle_category_id > vehicle_categories.category_id
+
+parking_spots.zone_id > parking_zones.zone_id
+parking_spots.spot_category_id > spot_categories.category_id
+
+parking_sessions.vehicle_id > vehicles.vehicle_id
+parking_sessions.spot_id > parking_spots.spot_id
+
+parking_tickets.session_id > parking_sessions.session_id
+
+payments.session_id > parking_sessions.session_id
+```
