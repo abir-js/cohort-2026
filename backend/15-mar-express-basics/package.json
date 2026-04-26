@@ -1,0 +1,16 @@
+{
+  "name": "15-mar-express-basics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node 01-express-intro.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.15.0",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
